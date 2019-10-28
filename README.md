@@ -11,7 +11,7 @@ In this library a situation is like a list of actions, but the syntax is
 a little more verbose. The more recent actions come first:
 
 ```logtalk
-do(get_married, do(meet_spouse, do(..., do(learn_to_walk, do(be_born, s0)))))
+do(get_married, do(meet_spouse, do(..., do(learn_to_walk, do(be_born, s0))...)))
 ```
 
 Where `s0` denotes the situation in which nothing has happened
@@ -38,7 +38,7 @@ An action is done like so:
 
 ```logtalk
 
-?- Sit = do(pick_up(ball), s0), drop(ball)::do(Sit, NextSit]).
+?- Sit = do(pick_up(ball), s0), drop(ball)::do(Sit, NextSit).
 ```
 
 The values that change in the application are called fluents (because
