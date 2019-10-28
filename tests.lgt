@@ -2,9 +2,9 @@
 	extends(lgtunit)).
 
 	:- info([
-		version is 1.0,
+		version is 1.1,
 		author is 'Paul Brown',
-		date is 2020/10/22,
+		date is 2020/10/28,
 		comment is 'Unit tests for tictactoe.'
 	]).
 
@@ -44,9 +44,9 @@
 
     % Test situations
     test(prior_transitive, true) :-
-        situation::prior([a, b, c], [b, c]),
-        situation::prior([a, b, c], [c]),
-        situation::prior([a, b, c], []).
+        ^^assertion(situation::prior([a, b, c], [b, c])),
+        ^^assertion(situation::prior([a, b, c], [c])),
+        ^^assertion(situation::prior([a, b, c], [])).
 
     test(plain_holds, true(P == closed)) :-
         situation::holds(door_position(P), []).
@@ -57,6 +57,5 @@
 
     test(sit_poss, true) :-
         situation::poss(open_door, []).
-
 
 :- end_object.
