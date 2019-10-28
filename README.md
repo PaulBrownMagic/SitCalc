@@ -10,7 +10,7 @@ mutation based on situation calculus.
 In this library a situation is a list, with the more recent actions
 coming first:
 
-```
+```logtalk
 [get_married, meet_spouse, ..., learn_to_walk, be_born]
 ```
 
@@ -20,7 +20,7 @@ yet. This list is what is passed around your application.
 To change this list, you *should* only do so through actions, which
 extend the action class:
 
-```
+```logtalk
 :- object(drop(_Item_),
     extends(action)).
 
@@ -36,7 +36,7 @@ always possible: `poss(_).`
 
 An action is done like so:
 
-```
+```logtalk
 ?- drop(ball)::do([pick_up(ball)], NextSit]).
 ```
 
@@ -45,7 +45,7 @@ this is situation calculus). We need to define in what situations they
 hold with what values. Note, in Logtalk the objects are identified by
 their functors.
 
-```
+```logtalk
 :- object(holding(_Item_),
     extends(fluent)).
 
@@ -67,7 +67,7 @@ their functors.
 Declaring these takes a little getting used to, but quickly becomes
 quite repetitive. We can query them like so:
 
-```
+```logtalk
 ?- holding(What)::holds([]).
 What = pen.
 
@@ -81,7 +81,7 @@ What = ball.
 
 Finally, the situation object has a couple of utility predicates:
 
-```
+```logtalk
 ?- situation::poss(A, []).
 A = pick_up(ball).
 
@@ -100,7 +100,7 @@ Lloyd Topper transformations from Reiter, and then the individual
 fluents or other goals are called. This is useful when defining `poss/1`
 for actions:
 
-```
+```logtalk
 :- object(boil_kettle,
     extends(action)).
 
