@@ -2,7 +2,7 @@
 	extends(lgtunit)).
 
 	:- info([
-		version is 1.1,
+		version is 1.2,
 		author is 'Paul Brown',
 		date is 2020/10/28,
 		comment is 'Unit tests for tictactoe.'
@@ -59,7 +59,7 @@
     test(term_holds_other_object, true) :-
         situation::holds(open_door::poss(s0), s0).
     test(term_holds_backend, true(C = 97)) :-
-        situation::holds({atom_char(a, C)}, s0).
+        situation::holds({char_code(a, C)}, s0).
 
     test(sit_poss, true) :-
         situation::poss(open_door, s0).
