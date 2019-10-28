@@ -10,29 +10,29 @@ Pos = closed,
 Power = off ;
 false.
 
-?- situation::poss(A, []).
+?- situation::poss(A, s0).
 A = turn_on(light) ;
 A = open_door ;
 false.
 
-?- open_door::do([], S1).
-S1 = [open_door].
+?- open_door::do(s0, S1).
+S1 = do(open_door, s0).
 
 ?- turn_on(light)::do($(S1), S2).
-S2 = [turn_on(light), open_door],
-S1 = [open_door].
+S2 = do(turn_on(light), do(open_door, s0)),
+S1 = do(open_door, s0).
 
 ?- situation::prior($(S2), S).
-S = [open_door],
-S2 = [turn_on(light), open_door] ;
-S = [],
-S2 = [turn_on(light), open_door] ;
+S = do(open_door, s0),
+S2 = do(turn_on(light), do(open_door, s0)) ;
+S = s0,
+S2 = do(turn_on(light), do(open_door, s0)) ;
 false.
 
 ?- situation::holds(F, $(S2)), F::holds($(S1)).
 F = door_position(open),
-S2 = [turn_on(light), open_door],
-S1 = [open_door] ;
+S2 = do(turn_on(light), do(open_door, s0)),
+S1 = do(open_door, s0) ;
 false.
 ```
 */
