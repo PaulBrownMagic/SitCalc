@@ -1,7 +1,11 @@
 # SitCalc
 
+
 SitCalc is a framework for managing state in an application without
 mutation based on situation calculus.
+
+![Workflow Status](https://github.com/PaulBrownMagic/SitCalc/workflows/Workflow/badge.svg)
+[Code Coverage Report](https://paulbrownmagic.github.io/SitCalc/coverage_report.html)
 
 In this library a situation is a list, with the more recent actions
 coming first:
