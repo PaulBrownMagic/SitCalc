@@ -7,14 +7,14 @@ mutation based on situation calculus.
 ![Workflow Status](https://github.com/PaulBrownMagic/SitCalc/workflows/Workflow/badge.svg)
 [Code Coverage Report](https://paulbrownmagic.github.io/SitCalc/coverage_report.html)
 
-In this library a situation is a list, with the more recent actions
-coming first:
+In this library a situation is like a list of actions, but the syntax is
+a little more verbose. The more recent actions come first:
 
 ```logtalk
-[get_married, meet_spouse, ..., learn_to_walk, be_born]
+do(get_married, do(meet_spouse, do(..., do(learn_to_walk, do(be_born, s0)))))
 ```
 
-Where the empty list denotes the situation in which nothing has happened
+Where `s0` denotes the situation in which nothing has happened
 yet. This list is what is passed around your application.
 
 To change this list, you *should* only do so through actions, which
@@ -37,7 +37,8 @@ always possible: `poss(_).`
 An action is done like so:
 
 ```logtalk
-?- drop(ball)::do([pick_up(ball)], NextSit]).
+
+?- Sit = do(pick_up(ball), s0), drop(ball)::do(Sit, NextSit]).
 ```
 
 The values that change in the application are called fluents (because
@@ -50,14 +51,14 @@ their functors.
     extends(fluent)).
 
 	% Initial situation:
-	holds([]) :- _Item_ == pen.
+	holds(s0) :- _Item_ == pen.
 
 	% Actions change what's held
-	holds([A|_]) :-
+	holds(do(A, _)) :-
 	    A = pick_up(_Item_).
 
 	% Or we were already holding it and we're not dropping it now
-	holds([A|S]) :-
+	holds(do(A, S)) :-
 	   holds(S),
 	   A \= drop(_Item_). % not holding it if we're dropping it
 
@@ -68,28 +69,28 @@ Declaring these takes a little getting used to, but quickly becomes
 quite repetitive. We can query them like so:
 
 ```logtalk
-?- holding(What)::holds([]).
+?- holding(What)::holds(s0).
 What = pen.
 
-?- holding(What)::holds([pick_up(ball)]).
+?- holding(What)::holds(do(pick_up(ball), s0)).
 What = ball ;
 What = pen.
 
-?- holding(What)::holds([drop(pen), pick_up(ball)]).
+?- holding(What)::holds(do(drop(pen), do(pick_up(ball), s0))).
 What = ball.
 ```
 
 Finally, the situation object has a couple of utility predicates:
 
 ```logtalk
-?- situation::poss(A, []).
+?- situation::poss(A, s0).
 A = pick_up(ball).
 
-?- situation::prior([pick_up(ball), drop(pen)], P).
-P = [drop(pen)] ;
-P = [].
+?- situation::prior(do(pick_up(ball), do(drop(pen), s0)), P).
+P = do(drop(pen), s0) ;
+P = s0.
 
-?- situation::holds(holding(pen) and holding(ball), [pick_up(ball)]).
+?- situation::holds(holding(pen) and holding(ball), do(pick_up(ball), s0)).
 true.
 ```
 
