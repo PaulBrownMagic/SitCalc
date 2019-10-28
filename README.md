@@ -58,9 +58,8 @@ their functors.
 
 	% Or we were already holding it and we're not dropping it now
 	holds([A|S]) :-
-	   A \= pick_up(_Item_), % case already dealt with
-	   A \= drop(_Item_), % not holding it if we're dropping it
-	   holds(S). % Prior situation
+	   holds(S),
+	   A \= drop(_Item_). % not holding it if we're dropping it
 
 :- end_object.
 ```
