@@ -117,4 +117,6 @@ Finally, to persist a situation between sessions, persist the list of
 actions and reload. Long sequences of actions will become slow to query,
 choose the applications you use this for wisely. To aid with this, we
 apply tabling to the holds predicate if the Logtalk backend supports
-this feature.
+this feature. Should you require a state-handling solution that clobbers
+fluents, you may find
+[STRIPState](https://github.com/PaulBrownMagic/STRIPState) more useful.
