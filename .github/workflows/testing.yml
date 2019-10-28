@@ -21,5 +21,4 @@ jobs:
         with:
           fetch-depth: 1
       - name: Run the application tests
-        run: |
-          logtalk_tester
+        run: logtalk_tester
