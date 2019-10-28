@@ -35,18 +35,18 @@
     :- endif.
 
 	:- initialization(
-		logtalk_load(fluents_tabled)
+		logtalk_load(fluents_tabled, [optimize(on)])
     ).
 
 :- else.
 
 	:- initialization(
-		logtalk_load(fluents)
+		logtalk_load(fluents, [optimize(on)])
     ).
 
 :- endif.
 
 
 :- initialization(
-    logtalk_load(situations)
+    logtalk_load(situations, [optimize(on)])
 ).

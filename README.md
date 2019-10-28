@@ -24,7 +24,7 @@ extend the action class:
 :- object(drop(_Item_),
     extends(action)).
 
-	poss(Situation) :-
+    poss(Situation) :-
         holding(_Item_)::holds(Situation).
 
 :- end_object.

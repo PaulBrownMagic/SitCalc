@@ -96,7 +96,6 @@
    poss(A, S) :-
        action::descendant(A),
        A::poss(S).
-       % Will need to make action and abolish to allow for more efficient metasituation::do/3-4
 
 
    % Transform holds query into single fluent subgoals and see if they hold
