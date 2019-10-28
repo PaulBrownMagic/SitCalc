@@ -54,6 +54,12 @@
         situation::holds(door_position(P) and power(light, V), []).
     test(term_holds, true(X = 3)) :-
         situation::holds(X is 1 + 2, []).
+    test(term_holds_builtin, true(Ls = [a, b, c])) :-
+        findall(X, situation::holds(list::member(X, [a, b, c]), []), Ls).
+    test(term_holds_other_object, true) :-
+        situation::holds(open_door::poss([]), []).
+    test(term_holds_backend, true(C = 97)) :-
+        situation::holds({atom_char(a, C)}, []).
 
     test(sit_poss, true) :-
         situation::poss(open_door, []).
