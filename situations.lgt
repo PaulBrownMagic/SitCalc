@@ -30,14 +30,13 @@
         [ comment is 'True if doing the action in S1 results in S2.'
         , argnames is ['S1', 'S2']
         ]).
-    do(S, [Self|S]) :-
+    do(S, do(Self, S)) :-
         ::poss(S),
         self(Self).
 :- end_object.
 
 
-:- object(situation,
-    extends(list)).
+:- object(situation).
 
     :- info([ version is 1.0
             , author is 'Paul Brown'
@@ -51,7 +50,7 @@
        [ comment is 'Prior situations to the current one (transitive).'
        , argnames is ['Situation', 'Prior']
        ]).
-    prior([_|S], P) :-
+    prior(do(_, S), P) :-
         S = P ; prior(S, P).
 
    :- public(holds/2).

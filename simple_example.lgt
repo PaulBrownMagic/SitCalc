@@ -38,26 +38,26 @@ false.
 */
 
 :- object(power(_Dev_, _V_), extends(fluent)).
-    holds([]) :-
+    holds(s0) :-
         _Dev_ = light, _V_ = off.
-    holds([A|_]) :-
+    holds(do(A, _)) :-
         A = turn_on(_Dev_), _V_ = on.
-    holds([A|_]) :-
+    holds(do(A, _)) :-
         A = turn_off(_Dev_), _V_ = off.
-    holds([A|S]) :-
+    holds(do(A, S)) :-
         A \= turn_on(_Dev_),
         A \= turn_off(_Dev_),
         holds(S).
 :- end_object.
 
 :- object(door_position(_Pos_), extends(fluent)).
-    holds([]) :-
+    holds(s0) :-
         _Pos_ = closed.
-    holds([A|_]) :-
+    holds(do(A, _)) :-
         A = close_door, _Pos_ = closed.
-    holds([A|_]) :-
+    holds(do(A, _)) :-
         A = open_door, _Pos_ = open.
-    holds([A|S]) :-
+    holds(do(A, S)) :-
         A \= close_door,
         A \= open_door,
         holds(S).
