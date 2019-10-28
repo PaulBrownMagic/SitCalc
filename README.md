@@ -18,7 +18,7 @@ Where `s0` denotes the situation in which nothing has happened
 yet. This list is what is passed around your application.
 
 To change this list, you *should* only do so through actions, which
-extend the action class:
+extend the action prototype:
 
 ```logtalk
 :- object(drop(_Item_),
@@ -31,8 +31,8 @@ extend the action class:
 ```
 
 This describes a drop action that is only possible when holding the
-item. All actions must have possible conditions, even if they're just
-always possible: `poss(_).`
+item. All actions must have possible conditions, even if they're
+always possible by defining the predicate `poss/1` as `poss(_).`
 
 An action is done like so:
 
@@ -41,7 +41,7 @@ An action is done like so:
 ?- Sit = do(pick_up(ball), s0), drop(ball)::do(Sit, NextSit).
 ```
 
-The values that change in the application are called fluents (because
+The values that change in the application are called *fluents* (because
 this is situation calculus). We need to define in what situations they
 hold with what values. Note, in Logtalk the objects are identified by
 their functors.
@@ -111,7 +111,7 @@ for actions:
 :- end_object.
 ```
 
-As we're in Prolog, `not` has the same meaning as `\+`.
+As we're in Logtalk, `not` has the same meaning as `\+`.
 
 Finally, to persist a situation between sessions, persist the list of
 actions and reload. Long sequences of actions will become slow to query,
