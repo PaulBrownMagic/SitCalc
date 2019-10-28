@@ -55,6 +55,7 @@
         S = P ; prior(S, P).
 
    :- public(holds/2).
+   :- meta_predicate(holds(*, *)).
    :- mode(holds(?object, +list), zero_or_more).
    :- mode(holds(+term, +list), zero_or_more).
    :- info(holds/2,
@@ -70,6 +71,7 @@
        query(Q, S).
 
    :- private(holds_/2).
+   :- meta_predicate(holds_(*, *)).
    :- mode(holds_(?object, +list), zero_or_more).
    :- mode(holds_(+term, +list), zero_or_more).
    :- info(holds_/2,
@@ -99,6 +101,7 @@
 
 
    % Transform holds query into single fluent subgoals and see if they hold
+   :- meta_predicate(query(*, *)).
    query(P and Q, S) :- nonvar(P), nonvar(Q),
        query(P, S), query(Q, S).
    query(P or Q, S) :- nonvar(P), nonvar(Q),
