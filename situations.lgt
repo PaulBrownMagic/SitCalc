@@ -101,9 +101,10 @@
        call(F).
 
    is_obj_fluent(Ob::Pred) :-
+       current_object(Ob),
+       Ob::current_predicate(fluent/1),
        functor(Pred, Func, Ar),
        NAr is Ar + 1,
-       imports_category(Ob, fluentc),
        Ob::fluent(Func/NAr).
 
 
