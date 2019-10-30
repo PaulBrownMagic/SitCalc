@@ -44,6 +44,15 @@
             , comment is 'A situation is defined by its history of actions.'
             ]).
 
+    :- public(empty/1).
+    :- mode(empty(?term), zero_or_one).
+    :- info(empty/1,
+        [ comment is 'The term that represents the "empty" situation.'
+        , argnames is ['Situation']
+        ]).
+    empty(s0).
+
+
     :- public(prior/2).
     :- mode(prior(?list, +list), zero_or_more).
     :- info(prior/2,
