@@ -103,6 +103,7 @@
    is_obj_fluent(Ob::Pred) :-
        functor(Pred, Func, Ar),
        NAr is Ar + 1,
+       imports_category(Ob, fluentc),
        Ob::fluent(Func/NAr).
 
 
