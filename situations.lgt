@@ -103,7 +103,7 @@
    is_obj_fluent(Ob::Pred) :-
        functor(Pred, Func, Ar),
        NAr is Ar + 1,
-       Ob::current_predicate(Func/NAr).
+       Ob::fluent(Func/NAr).
 
 
    :- public(poss/2).
