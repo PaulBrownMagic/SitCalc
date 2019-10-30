@@ -81,6 +81,11 @@
        % Is a Fluent Case
        fluent::descendant(F),
        F::holds(S).
+   holds_(Ob::Pred, S) :-
+       functor(Pred, Func, Ar),
+       NAr is Ar + 1,
+       Ob::current_predicate(Func/NAr),
+       call(Ob::Pred, S).
    holds_(F, _) :-
        % Is not a Fluent, treat as term
        nonvar(F),
