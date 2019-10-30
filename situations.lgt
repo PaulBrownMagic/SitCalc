@@ -2,7 +2,7 @@
 :- op(850, xfy, or).
 :- op(870, xfy, implies).
 :- op(880, xfy, equivalentTo).
-:- op(200, fy, not).
+:- op(600, fy, not).
 
 
 :- object(action,
