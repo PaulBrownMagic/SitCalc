@@ -6,52 +6,43 @@
 
 
 :- object(action,
+    implements(action_protocol),
     imports(proto_hierarchy)).
 
-    :- info([ version is 1.0
+    :- info([ version is 1.1
             , author is 'Paul Brown'
-            , date is 2019/10/2
+            , date is 2019/11/2
             , comment is 'An action to be extended by domain actions.'
             ]).
 
-    :- public(poss/1).
-   :- mode(poss(-list), zero_or_more).
-   :- mode(poss(+list), zero_or_one).
-   :- info(poss/1,
-       [ comment is 'True if the action is possible in the situation.'
-       , argnames is ['Situation']
-       ]).
-
-    :- public(do/2).
-    :- mode(do(+list, ?list), zero_or_one).
-    :- mode(do(-list, +list), zero_or_one).
-    :- mode(do(-list, -list), zero_or_more).
-    :- info(do/2,
-        [ comment is 'True if doing the action in S1 results in S2.'
-        , argnames is ['S1', 'S2']
-        ]).
     do(S, do(Self, S)) :-
         ::poss(S),
         self(Self).
 :- end_object.
 
 
-:- object(situation).
+:- object(situation,
+    implements(situation_protocol)).
 
-    :- info([ version is 1.0
+    :- info([ version is 1.1
             , author is 'Paul Brown'
-            , date is 2019/10/2
+            , date is 2019/11/2
             , comment is 'A situation is defined by its history of actions.'
             ]).
 
-    :- public(empty/1).
-    :- mode(empty(?term), zero_or_one).
-    :- info(empty/1,
-        [ comment is 'The term that represents the "empty" situation.'
-        , argnames is ['Situation']
-        ]).
     empty(s0).
 
+    holds(Q, S) :-
+        ( var(Q) ; \+ compound_query(Q) ),
+        holds_(Q, S).
+    holds(Q, S) :-
+        nonvar(Q),
+        compound_query(Q),
+        query(Q, S).
+
+    do(A, S1, S2) :-
+        implements_protocol(A, action),
+        A::do(S1, S2).
 
     :- public(prior/2).
     :- mode(prior(?list, +list), zero_or_more).
@@ -61,22 +52,6 @@
        ]).
     prior(do(_, S), P) :-
         S = P ; prior(S, P).
-
-   :- public(holds/2).
-   :- meta_predicate(holds(*, *)).
-   :- mode(holds(?object, +list), zero_or_more).
-   :- mode(holds(+term, +list), zero_or_more).
-   :- info(holds/2,
-       [ comment is 'What fluents hold in the situation. Can also be provided with a logical query term provided all fluents are nonvar: `situation::holds(power(X) and position(Y)).`'
-       , argnames is ['Holding', 'Situation']
-       ]).
-   holds(Q, S) :-
-       ( var(Q) ; \+ compound_query(Q) ),
-       holds_(Q, S).
-   holds(Q, S) :-
-       nonvar(Q),
-       compound_query(Q),
-       query(Q, S).
 
    :- private(holds_/2).
    :- meta_predicate(holds_(*, *)).

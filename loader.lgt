@@ -21,6 +21,8 @@
     logtalk_load([ meta(loader)
                  , hierarchies(loader)
                  , types(loader)
+                 , situation_protocols(loader)
+                 , situation_protocols(situation_query)
                  ])
 )).
 
