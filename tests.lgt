@@ -2,15 +2,15 @@
 	extends(lgtunit)).
 
 	:- info([
-		version is 1.2,
+		version is 1.3,
 		author is 'Paul Brown',
-		date is 2020/10/28,
+		date is 2020/11/3,
 		comment is 'Unit tests for tictactoe.'
 	]).
 
     cover(fluent).
     cover(action).
-    cover(situations).
+    cover(sitcalc).
 
     % Test fluents
     test(holds_in_s0, true(P == closed)) :-
@@ -44,24 +44,24 @@
 
     % Test situations
     test(prior_transitive, true) :-
-        ^^assertion(situation::prior(do(a, do(b, do(c, s0))), do(b, do(c, s0)))),
-        ^^assertion(situation::prior(do(a, do(b, do(c, s0))), do(c, s0))),
-        ^^assertion(situation::prior(do(a, do(b, do(c, s0))), s0)).
+        ^^assertion(sitcalc::prior(do(a, do(b, do(c, s0))), do(b, do(c, s0)))),
+        ^^assertion(sitcalc::prior(do(a, do(b, do(c, s0))), do(c, s0))),
+        ^^assertion(sitcalc::prior(do(a, do(b, do(c, s0))), s0)).
 
     test(plain_holds, true(P == closed)) :-
-        situation::holds(door_position(P), s0).
+        sitcalc::holds(door_position(P), s0).
     test(query_holds, true([P, V] == [closed, off])) :-
-        situation::holds(door_position(P) and power(light, V), s0).
+        sitcalc::holds(door_position(P) and power(light, V), s0).
     test(term_holds, true(X = 3)) :-
-        situation::holds(X is 1 + 2, s0).
+        sitcalc::holds(X is 1 + 2, s0).
     test(term_holds_builtin, true(Ls = [a, b, c])) :-
-        findall(X, situation::holds(list::member(X, [a, b, c]), s0), Ls).
+        findall(X, sitcalc::holds(list::member(X, [a, b, c]), s0), Ls).
     test(term_holds_other_object, true) :-
-        situation::holds(open_door::poss(s0), s0).
+        sitcalc::holds(open_door::poss(s0), s0).
     test(term_holds_backend, true(C = 97)) :-
-        situation::holds({char_code(a, C)}, s0).
+        sitcalc::holds({char_code(a, C)}, s0).
 
     test(sit_poss, true) :-
-        situation::poss(open_door, s0).
+        sitcalc::poss(open_door, s0).
 
 :- end_object.

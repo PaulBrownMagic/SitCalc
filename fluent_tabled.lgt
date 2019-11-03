@@ -1,6 +1,5 @@
-:- object(fluent,
-    implements(fluent_protocol),
-    imports(proto_hierarchy)).
+:- category(fluent,
+    implements(fluent_protocol)).
 
     :- info([ version is 1.1
             , author is 'Paul Brown'
@@ -8,4 +7,6 @@
             , comment is 'A fluent is a prototype. It is identified by the relationship that can hold in some situations. The value(s) this relationship holds between in a situation, if any, depend upon the situation'
             ]).
 
-:- end_object.
+   :- table(holds/1).
+
+:- end_category.

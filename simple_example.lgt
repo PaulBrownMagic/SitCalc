@@ -5,12 +5,12 @@ Example queries:
 
 ```
 
-?- situation::holds(door_position(Pos) and power(light, Power), []).
+?- sitcalc::holds(door_position(Pos) and power(light, Power), s0).
 Pos = closed,
 Power = off ;
 false.
 
-?- situation::poss(A, s0).
+?- sitcalc::poss(A, s0).
 A = turn_on(light) ;
 A = open_door ;
 false.
@@ -22,14 +22,14 @@ S1 = do(open_door, s0).
 S2 = do(turn_on(light), do(open_door, s0)),
 S1 = do(open_door, s0).
 
-?- situation::prior($(S2), S).
+?- sitcalc::prior($(S2), S).
 S = do(open_door, s0),
 S2 = do(turn_on(light), do(open_door, s0)) ;
 S = s0,
 S2 = do(turn_on(light), do(open_door, s0)) ;
 false.
 
-?- situation::holds(F, $(S2)), F::holds($(S1)).
+?- sitcalc::holds(F, $(S2)), F::holds($(S1)).
 F = door_position(open),
 S2 = do(turn_on(light), do(open_door, s0)),
 S1 = do(open_door, s0) ;
@@ -37,7 +37,7 @@ false.
 ```
 */
 
-:- object(power(_Dev_, _V_), extends(fluent)).
+:- object(power(_Dev_, _V_), imports(fluent)).
     holds(s0) :-
         _Dev_ = light, _V_ = off.
     holds(do(A, _)) :-
@@ -50,7 +50,7 @@ false.
         holds(S).
 :- end_object.
 
-:- object(door_position(_Pos_), extends(fluent)).
+:- object(door_position(_Pos_), imports(fluent)).
     holds(s0) :-
         _Pos_ = closed.
     holds(do(A, _)) :-
@@ -63,22 +63,22 @@ false.
         holds(S).
 :- end_object.
 
-:- object(turn_on(_Dev_), extends(action)).
+:- object(turn_on(_Dev_), imports(action)).
     poss(S) :-
         power(_Dev_, off)::holds(S).
 :- end_object.
 
-:- object(turn_off(_Dev_), extends(action)).
+:- object(turn_off(_Dev_), imports(action)).
    poss(S) :-
        power(_Dev_, on)::holds(S).
 :- end_object.
 
-:- object(open_door, extends(action)).
+:- object(open_door, imports(action)).
     poss(S) :-
         door_position(closed)::holds(S).
 :- end_object.
 
-:- object(close_door, extends(action)).
+:- object(close_door, imports(action)).
     poss(S) :-
         door_position(open)::holds(S).
 :- end_object.

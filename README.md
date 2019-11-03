@@ -7,6 +7,14 @@ mutation based on situation calculus.
 ![Workflow Status](https://github.com/PaulBrownMagic/SitCalc/workflows/Workflow/badge.svg)
 [Code Coverage Report](https://paulbrownmagic.github.io/SitCalc/coverage_report.html)
 
+## Dependencies
+
+SitCalc depends upon
+[Situations](https://github.com/PaulBrownMagic/Situations). The loader
+assumes it can be accessed as `situations(loader)`.
+
+## Usage
+
 In this library a situation is like a list of actions, but the syntax is
 a little more verbose. The more recent actions come first:
 
@@ -83,14 +91,14 @@ What = ball.
 Finally, the situation object has a couple of utility predicates:
 
 ```logtalk
-?- situation::poss(A, s0).
+?- sitcalc::poss(A, s0).
 A = pick_up(ball).
 
-?- situation::prior(do(pick_up(ball), do(drop(pen), s0)), P).
+?- sitcalc::prior(do(pick_up(ball), do(drop(pen), s0)), P).
 P = do(drop(pen), s0) ;
 P = s0.
 
-?- situation::holds(holding(pen) and holding(ball), do(pick_up(ball), s0)).
+?- sitcalc::holds(holding(pen) and holding(ball), do(pick_up(ball), s0)).
 true.
 ```
 
@@ -106,7 +114,7 @@ for actions:
     extends(action)).
 
 	poss(S) :-
-	    situation::holds(power(kettle, on) and not kettle_water(empty), S).
+	    sitcalc::holds(power(kettle, on) and not kettle_water(empty), S).
 
 :- end_object.
 ```
