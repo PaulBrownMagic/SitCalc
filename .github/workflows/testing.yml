@@ -19,11 +19,11 @@ jobs:
       - name: Checkout Logtalk application to be tested
         uses: actions/checkout@v1
         with:
-          fetch-depth: 1
+          fetch-depth: 5
       - name: Checkout application dependencies
         uses: actions/checkout@v1
         with:
           repository: PaulBrownMagic/Situations
-          fetch-depth: 1
+          fetch-depth: 5
       - name: Run the application tests
         run: logtalk_tester
