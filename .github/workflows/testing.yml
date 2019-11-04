@@ -27,4 +27,8 @@ jobs:
           ref: refs/heads/master
           fetch-depth: 1
       - name: Run the application tests
-        run: logtalk_tester
+        run: |
+          echo ":- multifile(logtalk_library_path/2)." > settings.lgt
+          echo ":- dynamic(logtalk_library_path/2)." >> settings.lgt
+          echo "logtalk_library_path(situations, '/home/runner/work/SitCalc/Situations/')." >> settings.lgt
+          logtalk_tester

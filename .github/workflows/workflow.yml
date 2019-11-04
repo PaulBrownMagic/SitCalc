@@ -28,6 +28,9 @@ jobs:
       - name: Run the application tests
         run: |
           pwd
+          echo ":- multifile(logtalk_library_path/2)." > settings.lgt
+          echo ":- dynamic(logtalk_library_path/2)." >> settings.lgt
+          echo "logtalk_library_path(situations, '/home/runner/work/SitCalc/Situations/')." >> settings.lgt
           ls -l
           logtalk_tester -f tap -c xml
           xsltproc --stringparam prefix work/$(basename $GITHUB_REPOSITORY)/$(basename $GITHUB_REPOSITORY)/ --stringparam url https://github.com/$GITHUB_REPOSITORY/tree/$GITHUB_SHA -o coverage_report.html coverage_report.xml
