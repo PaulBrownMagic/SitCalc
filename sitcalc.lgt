@@ -80,11 +80,25 @@
     :- public(situation_list/2).
     :- mode(situation_list(?term, ?list), zero_or_one).
     :- info(situation_list/2,
-        [ comment is 'Convert between the Situation term and a list representation.'
+    [ comment is 'Convert between the Situation term and a list representation. Will generate unground terms.'
         , argnames is ['Situation', 'List']
         ]).
-    situation_list(s0, []).
-    situation_list(do(A, S), [A|L]) :-
-        situation_list(S, L).
+    situation_list(Sit, List) :-
+        ( var(Sit) ->
+          list_sit(List, H-H, Sit)
+        ; sit_list(Sit, H-H, List)
+        ).
+
+    % sit_list assumes non-Sit var, List is difference-list
+    sit_list(s0, List-[], List).
+    sit_list(do(A, S), Acc-[A|H], List) :-
+        sit_list(S, Acc-H, List).
+
+    % list_sit assumes Sit var,
+    % Sit is like a difference list, but
+    % `do(Action, Hole)-Hole` instead of `.(Elem, Hole)-Hole`
+    list_sit([], Sit-s0, Sit).
+    list_sit([A|T], Acc-do(A, H), Sit) :-
+        list_sit(T, Acc-H, Sit).
 
 :- end_object.
