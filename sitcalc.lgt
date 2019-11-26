@@ -101,4 +101,32 @@
     list_sit([A|T], Acc-do(A, H), Sit) :-
         list_sit(T, Acc-H, Sit).
 
+
+    :- public(length/2).
+    :- mode(length(?term, ?int), zero_or_one).
+    :- info(length/2,
+        [ comment is 'The number of actions in the Situation term.'
+        , argnames is ['Situation', 'Length']
+        ]).
+    length(Sit, Length) :-
+        ( integer(Length) ->
+          Length >= 0,
+          make_sit(Length, Sit)
+        ; var(Length),
+          length(Sit, 0, Length)
+        ).
+
+    make_sit(N, Sit) :-
+        ( N =:= 0 ->
+          Sit = s0
+        ; M is N - 1,
+          Sit = do(_, Prior),
+          make_sit(M, Prior)
+        ).
+
+    length(s0, Length, Length).
+    length(do(_, Prior), Acc, Length) :-
+        Acc2 is Acc + 1,
+        length(Prior, Acc2, Length).
+
 :- end_object.
