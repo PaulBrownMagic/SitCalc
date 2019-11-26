@@ -129,4 +129,18 @@
         Acc2 is Acc + 1,
         length(Prior, Acc2, Length).
 
+    :- public(executable/1).
+    :- mode(executable(+term), zero_or_one).
+    :- mode(executable(-term), zero_or_more).
+    :- info(executable/1,
+        [ comment is 'The Situation term is theoretically executable. Will generate situations.'
+        , argnames is ['Situation']
+        ]).
+    executable(s0).
+    executable(do(A, S)) :-
+        executable(S),
+        conforms_to_protocol(A, action_protocol),
+        current_object(A), % Not a category
+        A::poss(S).
+
 :- end_object.

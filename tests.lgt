@@ -90,4 +90,8 @@
     test(sit_length_backwards, true(S = do(foo, do(bar, do(baz, s0))))) :-
         sitcalc::length(S, 3), S = do(A, do(B, do(C, s0))), var(A), var(B), var(C).
 
+    test(executable_ground, true) :-
+        sitcalc::executable(do(open_door, do(turn_on(light), s0))).
+    test(executable_var_first, true(S == s0)) :-
+        sitcalc::executable(S).
 :- end_object.
