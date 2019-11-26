@@ -49,12 +49,42 @@
         A::poss(S).
 
     :- public(prior/2).
-    :- mode(prior(?list, +list), zero_or_more).
+    :- mode(prior(?term, +term), zero_or_more).
     :- info(prior/2,
        [ comment is 'Prior situations to the current one (transitive).'
        , argnames is ['Situation', 'Prior']
        ]).
     prior(do(_, S), P) :-
         S = P ; prior(S, P).
+
+    :- public(member/2).
+    :- mode(member(?term, +term), zero_or_more).
+    :- info(member/2,
+        [ comment is 'Action is a member, or done in, the Situation term.'
+        , argnames is ['Action', 'Situation']
+        ]).
+    member(Action, do(Action, _)).
+    member(Action, do(_, Prior)) :-
+        member(Action, Prior).
+
+    :- public(memberchk/2).
+    :- mode(memberchk(+term, +term), zero_or_one).
+    :- info(memberchk/2,
+        [ comment is 'Check if the Action is in the Situation term.'
+        , argnames is ['Action', 'Situation']
+        ]).
+    memberchk(Action, do(Action, _)) :- !.
+    memberchk(Action, do(_, Prior)) :-
+        memberchk(Action, Prior).
+
+    :- public(situation_list/2).
+    :- mode(situation_list(?term, ?list), zero_or_one).
+    :- info(situation_list/2,
+        [ comment is 'Convert between the Situation term and a list representation.'
+        , argnames is ['Situation', 'List']
+        ]).
+    situation_list(s0, []).
+    situation_list(do(A, S), [A|L]) :-
+        situation_list(S, L).
 
 :- end_object.
