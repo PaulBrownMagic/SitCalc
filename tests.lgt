@@ -5,7 +5,7 @@
 		version is 1.3,
 		author is 'Paul Brown',
 		date is 2020/11/3,
-		comment is 'Unit tests for tictactoe.'
+		comment is 'Unit tests for SitCalc.'
 	]).
 
     cover(fluent).
