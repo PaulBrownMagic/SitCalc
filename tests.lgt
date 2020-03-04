@@ -2,9 +2,9 @@
 	extends(lgtunit)).
 
 	:- info([
-		version is 1.3,
+		version is 1:3:0,
 		author is 'Paul Brown',
-		date is 2020/11/3,
+		date is 2020-11-03,
 		comment is 'Unit tests for SitCalc.'
 	]).
 

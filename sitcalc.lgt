@@ -2,9 +2,9 @@
     imports(situation_query),
     implements(situation_protocol)).
 
-    :- info([ version is 1.1
+    :- info([ version is 1:1:0
             , author is 'Paul Brown'
-            , date is 2019/11/2
+            , date is 2019-11-02
             , comment is 'A situation is defined by its history of actions.'
             ]).
 
