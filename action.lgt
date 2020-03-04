@@ -1,9 +1,9 @@
 :- category(action,
     implements(action_protocol)).
 
-    :- info([ version is 1.1
+    :- info([ version is 1:1:0
             , author is 'Paul Brown'
-            , date is 2019/11/2
+            , date is 2019-11-02
             , comment is 'An action to be extended by domain actions.'
             ]).
 
