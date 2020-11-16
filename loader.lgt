@@ -17,18 +17,20 @@
     :- endif.
 
 	:- initialization(
-		logtalk_load(fluent_tabled, [optimize(on)])
+		logtalk_load([ fluent_tabled
+                     , action
+                     , sitcalc_tabled
+                     ]
+                     , [optimize(on)])
     ).
 
 :- else.
 
 	:- initialization(
-		logtalk_load(fluent, [optimize(on)])
+		logtalk_load([ fluent
+                     , action
+                     , sitcalc
+                     ], [optimize(on)])
     ).
 
 :- endif.
-
-
-:- initialization(
-    logtalk_load([action, sitcalc], [optimize(on)])
-).
