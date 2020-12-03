@@ -48,14 +48,60 @@
         ^^assertion(sitcalc::prior(do(a, do(b, do(c, s0))), do(c, s0))),
         ^^assertion(sitcalc::prior(do(a, do(b, do(c, s0))), s0)).
 
+    % s0: door_position(closed) and power(light, off) holds
     test(plain_holds, true(P == closed)) :-
         sitcalc::holds(door_position(P), s0).
-    test(query_holds, true([P, V] == [closed, off])) :-
+
+    test(and_holds, true([P, V] == [closed, off])) :-
         sitcalc::holds(door_position(P) and power(light, V), s0).
+
+    test(or_holds, true([P, V] == [closed, off])) :-
+        sitcalc::holds(door_position(open) or door_position(P), s0),
+        sitcalc::holds(power(light, V) or power(light, on), s0).
+
+    test(implies_holds_gnd, true) :-
+        sitcalc::holds(door_position(closed) implies power(light, off), s0).
+    test(implies_holds_ff, true) :-
+        sitcalc::holds(door_position(open) implies power(light, on), s0).
+    test(implies_holds_fail, fail) :-
+        sitcalc::holds(door_position(closed) implies power(light, on), s0).
+    test(implies_holds_snd_var, true(V = off)) :-
+        sitcalc::holds(door_position(closed) implies power(light, V), s0).
+
+    % a find all for implies_holds_first_failing_var should get both on and off
+    % but we can't get negative case because of \+
+    test(implies_holds_first_failing_var, true(V = off)) :-
+        sitcalc::holds(door_position(open) implies power(light, V), s0).
+    % a find all for implies_holds_fst_var should get both open and closed
+    % but we can't get negative case because of \+
+    test(impies_holds_fst_var, true(V = closed)) :-
+        sitcalc::holds(door_position(V) implies power(light, off), s0).
+
+    test(equiv_holds_both_true, true) :-
+        sitcalc::holds(door_position(closed) equivalentTo power(light, off), s0).
+    test(equiv_holds_both_false, true) :-
+        sitcalc::holds(door_position(open) equivalentTo power(light, on), s0).
+    test(equiv_holds_both_vars_pos, true([P, V] = [closed, off])) :-
+        sitcalc::holds(door_position(P) equivalentTo power(light, V), s0).
+    test(equiv_holds_snd_var_pos, true(V=off)) :-
+        sitcalc::holds(door_position(closed) equivalentTo power(light, V), s0).
+    test(equiv_holds_fst_neg, fail) :-
+        sitcalc::holds(door_position(open) equivalentTo power(light, off), s0).
+    test(equiv_holds_snd_neg, fail) :-
+        sitcalc::holds(door_position(closed) equivalentTo power(light, on), s0).
+    test(equiv_holds_fst_var_pos, true(P=closed)) :-
+        sitcalc::holds(door_position(P) equivalentTo power(light, off), s0).
+    /*test(equiv_holds_fst_var_neg, true(P=open)) :-*/
+        /*sitcalc::holds(door_position(P) equivalentTo power(light, on), s0).*/
+    % We can't get negative varibles due to \+
+    /*test(equiv_holds_snd_var_neg, true(V=on)) :-*/
+        /*sitcalc::holds(door_position(open) equivalentTo power(light, V), s0).*/
+
     test(term_holds, true(X = 3)) :-
         sitcalc::holds(X is 1 + 2, s0).
-    test(term_holds_builtin, true(Ls = [a, b, c])) :-
-        findall(X, sitcalc::holds(list::member(X, [a, b, c]), s0), Ls).
+    test(term_holds_builtin, true(Ls = [1, 2, 3])) :-
+        findall(X, sitcalc::holds(list::member(X, [1, 2, 3]), s0), ALs),
+        list::sort(ALs, Ls).
     test(term_holds_other_object, true) :-
         sitcalc::holds(open_door::poss(s0), s0).
     test(term_holds_backend, true(C = 97)) :-

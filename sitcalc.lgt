@@ -14,6 +14,9 @@
         ^^is_action(A),
         A::do(S1, S2).
 
+    :- if(current_logtalk_flag(tabling, supported)).
+        :- table(holds_/2).
+    :- endif.
     :- meta_predicate(holds_(*, *)).
     holds_(F, S) :-
         % Is a Fluent Case
