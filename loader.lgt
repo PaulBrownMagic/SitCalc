@@ -7,7 +7,7 @@
 		)).
 		:- use_module(library(tabling)).
 	:- endif.
-	:- initialization(logtalk::print_message(information, core, ['Loading sitcalc with tabling supported'])).
+	:- initialization(logtalk::print_message(comment, core, ['Loading sitcalc with tabling supported'])).
 :- endif.
 
 :- initialization((
