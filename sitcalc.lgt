@@ -25,7 +25,7 @@
     holds_(Ob::Pred, S) :-
         is_obj_fluent(Ob::Pred),
         call(Ob::Pred, S).
-    holds_(F, _) :-
+	holds_(F, _) :-  % make this into call(F) for less defaulty, include on strategy
         % Is not a Fluent, treat as term
         nonvar(F),
         \+ ^^is_fluent(F),
@@ -58,7 +58,9 @@
        , argnames is ['Situation', 'Prior']
        ]).
     prior(do(_, S), P) :-
-        S = P ; prior(S, P).
+		S = P.
+    prior(do(_, S), P) :-
+		prior(S, P).
 
     :- public(member/2).
     :- mode(member(?term, +term), zero_or_more).
